@@ -1,11 +1,12 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
 
 inquirer 
     .prompt ([
         {
             type: 'input',
             message: 'What is the Title of your Project?',
-            name: 'Title'
+            name: 'title'
         },
         {
             type: 'input',
@@ -29,6 +30,18 @@ inquirer
             name: 'email'
         },
     ])
-    .then((data) =>
-    console.log(data)
-    )
+    .then((data) => {
+    console.log(data);
+    const {title, description, license, github, email} = data;
+
+    const htmlIndex = `
+    ${title}
+    ${description}
+    ${license}
+    ${github}
+    ${email}`;
+
+    fs.writeFile(`${title}.md`, htmlIndex, (err) => err 
+    ? console.log(err) 
+    : console.log('Generating a README.md file...'));
+    });
