@@ -34,14 +34,38 @@ inquirer
     console.log(data);
     const {title, description, license, github, email} = data;
 
-    const htmlIndex = `
-    ${title}
-    ${description}
-    ${license}
-    ${github}
-    ${email}`;
+    const readmeData = `
+        # ${title}
 
-    fs.writeFile(`${title}.md`, htmlIndex, (err) => err 
+        ## Description
+
+        ${description}
+
+        ## Table of Contents
+
+        - [Installation](#installation)
+        - [Usage](#usage)
+        - [Credits](#credits)
+        - [License](#license)
+
+        ## Installation
+
+        ## Credits
+
+        Reach out to me via either my github, or email!
+
+        My Github username: ${github}
+        My email adress: ${email}
+
+        ## License
+
+        ${license}
+
+        ## Badges
+
+        ## Features`;
+
+    fs.writeFile(`${title}.md`, readmeData, (err) => err 
     ? console.log(err) 
     : console.log('Generating a README.md file...'));
     });
