@@ -58,8 +58,8 @@ inquirer
                 },
             ])
             .then((data) => {
+                contributorArray.push(`- ${data.credits}\n`);
                 if (data.addCont) {
-                    contributorArray.push(data.credits);
                     contributorLoop();
                 } else {
                     continuePrompts();
@@ -124,7 +124,7 @@ inquirer
         
                 ## Credits
         
-                ${contributorArray}
+                ${contributorArray.join('')}
         
                 ## Tests
         
@@ -138,9 +138,9 @@ inquirer
         
                 Reach out to me via either my github, or email!
         
-                My Github username: [Github](https://github.com/${github})
+                My Github username: [${github}](https://github.com/${github})
         
-                My email adress: [email](${email})`;
+                My email adress: [${email}](${email})`;
         
             fs.writeFile(`${title}.md`, readmeData.trim().replace(/^ +/gm, ''), (err) => err 
             ? console.log(err) 
