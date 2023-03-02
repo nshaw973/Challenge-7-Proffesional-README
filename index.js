@@ -50,7 +50,12 @@ inquirer
                     type: 'input',
                     message: 'Provide the name of a contributor with github username.',
                     name: 'credits',
-                }, 
+                },
+                {
+                    type: 'input',
+                    message: 'Provide the users github username.',
+                    name: 'contGit',
+                },  
                 {
                     type: 'confirm',
                     message: 'Are there any MORE contributors?',
@@ -58,7 +63,7 @@ inquirer
                 },
             ])
             .then((data) => {
-                contributorArray.push(`- ${data.credits}\n`);
+                contributorArray.push(`- ${data.credits} Github: [${data.contGit}](https://github.com/${data.contGit})\n`);
                 if (data.addCont) {
                     contributorLoop();
                 } else {
@@ -80,7 +85,12 @@ inquirer
                 type: 'list',
                 message: 'Choose a License from the list.',
                 name: 'license',
-                choices: ['Apache License 2.0', 'GNU GPLv3', 'MIT', 'ISC License', 'Boost Software License 1.0']
+                choices: ['Apache License 2.0', 'GNU GPLv3', 'MIT', 'Mozilla Public License 2.0', 'Boost Software License 1.0']
+            },
+            {
+                type: 'input',
+                message: 'What is your name?',
+                name: 'name'
             },
             {
                 type: 'input',
@@ -97,7 +107,7 @@ inquirer
 
             mergeData.push(data);
             const fullData = {...mergeData[0], ...mergeData[1]}
-            const {title, description, installProcess, usage, testInst, license, github, email} = fullData
+            const {title, description, installProcess, usage, testInst, license, name, github, email} = fullData
         
             const readmeData = `
                 # ${title}
@@ -113,6 +123,7 @@ inquirer
                 - [Usage](#usage)
                 - [Credits](#credits)
                 - [License](#license)
+                - [Questions](#question)
         
                 ## Installation
         
@@ -123,6 +134,8 @@ inquirer
                 ${usage}
         
                 ## Credits
+
+                ${name} Github: [${github}](https://github.com/${github})
         
                 ${contributorArray.join('')}
         
@@ -132,19 +145,25 @@ inquirer
         
                 ## License
         
-                ${license}
+                ${license} license.
+
+                Please see license.txt file for additional info on license.
         
                 ## Questions
         
-                Reach out to me via either my github, or email!
+                Reach out to me (${name}) via either my github, or email!
         
                 My Github username: [${github}](https://github.com/${github})
         
                 My email adress: [${email}](${email})`;
         
-            fs.writeFile(`${title}.md`, readmeData.trim().replace(/^ +/gm, ''), (err) => err 
+            fs.writeFile(`./Generated Readme/README.md`, readmeData.trim().replace(/^ +/gm, ''), (err) => err 
             ? console.log(err) 
             : console.log('Generating a README.md file...'));
+
+            fs.copyFile(`./license/${license}.txt`, `./Generated Readme/license.txt`, (err) => err 
+            ? console.log(err) 
+            : console.log('Generating license file...'));
             })
         }
     })
