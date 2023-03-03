@@ -17,6 +17,26 @@ inquirer
         },
         {
             type: 'input',
+            message: 'What motivated this project?',
+            name: 'motivation'
+        },
+        {
+            type: 'input',
+            message: 'Why did you build this project?',
+            name: 'build'
+        },
+        {
+            type: 'input',
+            message: 'What problem does this project solve?',
+            name: 'problem'
+        },
+        {
+            type: 'input',
+            message: 'What did you learn?',
+            name: 'learn'
+        },
+        {
+            type: 'input',
             message: 'Provide installation process.',
             name: 'installProcess'
         },
@@ -48,7 +68,7 @@ inquirer
             .prompt ([
                 {
                     type: 'input',
-                    message: 'Provide the name of a contributor with github username.',
+                    message: 'Provide the name of a contributor.',
                     name: 'credits',
                 },
                 {
@@ -107,7 +127,7 @@ inquirer
 
             mergeData.push(data);
             const fullData = {...mergeData[0], ...mergeData[1]}
-            const {title, description, installProcess, usage, testInst, license, name, github, email} = fullData
+            const {title, description, motivation, build, problem, learn, installProcess, usage, testInst, license, name, github, email} = fullData
         
             const readmeData = `
                 # ${title}
@@ -116,6 +136,11 @@ inquirer
                 ## Description
         
                 ${description}
+
+                - ${motivation}
+                - ${build}
+                - ${problem}
+                - ${learn}
         
                 ## Table of Contents
         
@@ -123,7 +148,7 @@ inquirer
                 - [Usage](#usage)
                 - [Credits](#credits)
                 - [License](#license)
-                - [Questions](#question)
+                - [Questions](#questions)
         
                 ## Installation
         
@@ -135,8 +160,7 @@ inquirer
         
                 ## Credits
 
-                ${name} Github: [${github}](https://github.com/${github})
-        
+                - ${name} Github: [${github}](https://github.com/${github})
                 ${contributorArray.join('')}
         
                 ## Tests
